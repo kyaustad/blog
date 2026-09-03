@@ -5,11 +5,17 @@ export const env = createEnv({
   server: {
     TURSO_AUTH_TOKEN: z.string().min(1),
     TURSO_CONNECTION_URL: z.string().min(1),
+    ADMIN_PASSWORD: z.string().min(1),
+    PASSWORD_HASH: z.string().min(1),
+    PASSWORD_TEST: z.string().min(1),
   },
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
   runtimeEnv: {
     TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
     TURSO_CONNECTION_URL: process.env.TURSO_CONNECTION_URL,
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    PASSWORD_HASH: process.env.PASSWORD_HASH,
+    PASSWORD_TEST: process.env.PASSWORD_TEST,
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // experimental__runtimeEnv: {

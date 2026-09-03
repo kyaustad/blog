@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -14,6 +16,7 @@
     "@phosphor-icons/react": "^2.1.10",
     "@shadcn/react": "^0.3.0",
     "@t3-oss/env-nextjs": "^0.13.11",
+    "argon2": "^0.45.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -21,6 +24,7 @@
     "drizzle-orm": "^1.0.0-rc.4",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.5.0",
+    "jose": "^6.2.10",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-day-picker": "^10.0.1",
@@ -42,6 +46,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   },
   "packageManager": "bun@1.4.0",

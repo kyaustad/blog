@@ -8,4 +8,8 @@ export const posts = sqliteTable('posts', {
     postedBy: text('posted_by').notNull(),
     createdAt: text('created_at').default(sql`(CURRENT_TIMESTAMP)`).notNull(),
     updatedAt: integer('updated_at', { mode: 'timestamp'}).$onUpdate(() => new Date()),
+    slug: text('slug').notNull(),
+    published: integer('published', { mode: 'boolean'}).default(false).notNull(),
+    publishedAt: integer('published_at', { mode: 'timestamp'}).default(sql`(CURRENT_TIMESTAMP)`),
+
 })
