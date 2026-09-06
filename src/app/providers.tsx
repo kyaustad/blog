@@ -8,7 +8,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
       <ThemeProvider attribute="class" defaultTheme="dark">
-        <Toaster richColors />
+        <Toaster />
         <Suspense fallback={<div>Loading...</div>}>
           <TooltipProvider>
             <ThemeToggle className="fixed top-4 right-4" />

@@ -13,11 +13,13 @@
   "dependencies": {
     "@base-ui/react": "^1.7.0",
     "@libsql/client": "^0.17.4",
+    "@mdxeditor/editor": "^4.2.3",
     "@phosphor-icons/react": "^2.1.10",
     "@shadcn/react": "^0.3.0",
     "@t3-oss/env-nextjs": "^0.13.11",
     "argon2": "^0.45.1",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.11.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.4.0",

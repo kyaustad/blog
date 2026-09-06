@@ -5,8 +5,14 @@ import { env } from "@/env";
 import * as jose from "jose";
 import { cookies } from "next/headers";
 import { verify } from "otplib";
+import { posts, type SelectPost } from "@/db/schema";
+import { desc } from "drizzle-orm";
+import { db } from "@/db";
+import { v2 as cloudinary } from "cloudinary";
 
-type Response<T = null> = {
+cloudinary.config(env.CLOUDINARY_URL);
+
+export type APIResponse<T> = {
   success: boolean;
   message: string;
   data?: T;
@@ -94,7 +100,7 @@ export async function readPurposeCookie(
 export async function login(
   email: string,
   password: string,
-): Promise<Response<null>> {
+): Promise<APIResponse<null>> {
   if (email !== env.ADMIN_EMAIL) {
     return {
       success: false,
@@ -135,4 +141,38 @@ export async function verifyMfa(code: string) {
   await issueSessionCookie();
 
   return { success: true, message: "Welcome Back Doooche", data: null };
+}
+
+export async function getAllPosts(): Promise<APIResponse<SelectPost[]>> {
+  const allPosts = await db.select().from(posts).orderBy(desc(posts.createdAt));
+
+  return {
+    success: true,
+    message: "All posts returned in descending order",
+    data: allPosts,
+  } as APIResponse<SelectPost[]>;
+}
+
+export async function uploadMedia(
+  media: File,
+  type: "image" | "video",
+): Promise<APIResponse<string>> {
+  const bytes = Buffer.from(await media.arrayBuffer());
+  const dataUri = `data:${media.type || "application/octet-stream"};base64,${bytes.toString("base64")}`;
+
+  // public_id should be a clean id, not the raw filename with spaces/extensions
+  const publicId = media.name.replace(/\.[^.]+$/, "").replace(/[^\w-]+/g, "-");
+
+  const result = await cloudinary.uploader.upload(dataUri, {
+    resource_type: type,
+    public_id: publicId,
+    folder: `blog/${type}s`, // no leading slash
+    overwrite: true,
+  });
+
+  return {
+    success: true,
+    message: "Media uploaded successfully",
+    data: result.secure_url,
+  };
 }

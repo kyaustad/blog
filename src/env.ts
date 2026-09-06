@@ -9,7 +9,7 @@ export const env = createEnv({
     PASSWORD_TEST: z.string().min(1),
     JWT_SECRET: z.string().min(16),
     PASSWORD_HASH: z.string().min(1),
-
+    CLOUDINARY_URL: z.string().min(1),
     TOTP_SECRET: z.string().min(1),
   },
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
@@ -21,6 +21,7 @@ export const env = createEnv({
     JWT_SECRET: process.env.JWT_SECRET,
     PASSWORD_HASH: process.env.PASSWORD_HASH,
     TOTP_SECRET: process.env.TOTP_SECRET,
+    CLOUDINARY_URL: process.env.CLOUDINARY_URL,
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // experimental__runtimeEnv: {

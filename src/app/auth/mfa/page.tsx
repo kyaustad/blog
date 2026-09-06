@@ -1,5 +1,3 @@
-"use server";
-
 import { readPurposeCookie } from "@/server";
 import MFAForm from "@/components/custom/mfa-form";
 import { redirect } from "next/navigation";
