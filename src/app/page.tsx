@@ -1,15 +1,9 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+"use server";
 
 export default function Home() {
-  const router = useRouter();
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <Button onClick={() => router.push("/auth/login")}>
-        Login
-      </Button>
+      <h1>Home</h1>
     </div>
   );
 }

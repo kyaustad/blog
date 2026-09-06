@@ -25,7 +25,7 @@ async function issueMfaPendingCookie() {
     sub: env.ADMIN_EMAIL,
     purpose: "mfa_pending",
   })
-    .setProtectedHeader({ alg: "HS256 " })
+    .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("5m")
     .sign(new TextEncoder().encode(env.JWT_SECRET));
@@ -49,7 +49,7 @@ async function issueSessionCookie() {
     sub: env.ADMIN_EMAIL,
     purpose: "session",
   })
-    .setProtectedHeader({ alg: "HS256 " })
+    .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
     .sign(new TextEncoder().encode(env.JWT_SECRET));
@@ -117,4 +117,22 @@ export async function login(
     message: "MFA Required",
     data: null,
   };
+}
+
+export async function verifyMfa(code: string) {
+  const mfaPending = await readPurposeCookie("mfa_pending", "mfa_pending");
+  if (!mfaPending) {
+    return { success: false, message: "You took too long. Start Over" };
+  }
+
+  const result = await verify({ secret: env.TOTP_SECRET, token: code });
+
+  if (!result || !result.valid) {
+    return { success: false, message: "Nope, not it bud" };
+  }
+
+  await clearMfaPendingCookie();
+  await issueSessionCookie();
+
+  return { success: true, message: "Welcome Back Doooche", data: null };
 }
