@@ -1,12 +1,15 @@
 import LogoutButton from "@/components/custom/logout-button";
-import { RefEditor } from "@/components/custom/ref-markdown-editor";
+import PostComposer from "@/components/custom/post-composer";
 
 export default function DashboardPage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-8 w-full">
       <h1>Dashboard Page</h1>
       <LogoutButton />
-      <RefEditor markdown="Hello, world!" className="w-full" />
+      <PostComposer
+        className="flex flex-col gap-4"
+        editorClassName="w-full h-full text-foreground"
+      />
     </div>
   );
 }

@@ -5,6 +5,8 @@ export const posts = sqliteTable("posts", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
+  featuredImage: text("featured_image"),
+  summary: text("summary"),
   postedBy: text("posted_by").notNull(),
   createdAt: text("created_at")
     .default(sql`(CURRENT_TIMESTAMP)`)

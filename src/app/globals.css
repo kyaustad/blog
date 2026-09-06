@@ -86,22 +86,23 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.22 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.22 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --secondary: oklch(0.3 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --muted: oklch(0.3 0 0);
+  --muted-foreground: oklch(0.78 0 0);
+  --accent: oklch(0.3 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* Stronger edges so inputs/borders read on near-black backgrounds */
+  --border: oklch(1 0 0 / 24%);
+  --input: oklch(1 0 0 / 32%);
+  --ring: oklch(0.72 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -113,8 +114,8 @@
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-border: oklch(1 0 0 / 24%);
+  --sidebar-ring: oklch(0.72 0 0);
 }
 
 @layer base {
@@ -126,5 +127,35 @@
   }
   html {
     @apply font-mono;
+  }
+}
+
+/* MDXEditor: always dark text on a light surface (matches its default toolbar) */
+@layer components {
+  .mdxeditor {
+    --basePageBg: #ffffff;
+    --baseBase: #fcfcfd;
+    --baseBgSubtle: #f9f9fb;
+    --baseBg: #f0f0f3;
+    --baseBgHover: #e8e8ec;
+    --baseBgActive: #e0e1e6;
+    --baseLine: #d9d9e0;
+    --baseBorder: #cdced6;
+    --baseBorderHover: #b9bbc6;
+    --baseSolid: #8b8d98;
+    --baseSolidHover: #80838d;
+    --baseText: #1c2024;
+    --baseTextContrast: #111113;
+    color: var(--baseText);
+    background: var(--basePageBg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .mdxeditor [contenteditable="true"] {
+    color: var(--baseText) !important;
+    background-color: var(--basePageBg);
+    caret-color: var(--baseText);
   }
 }

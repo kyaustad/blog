@@ -56,7 +56,7 @@ export default function InitializedMDXEditor({
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
   return (
     <MDXEditor
-      contentEditableClassName="prose dark:prose-invert max-w-none min-h-[240px] p-4"
+      contentEditableClassName="prose max-w-none min-h-[240px] p-4 text-[#1c2024] prose-headings:text-[#1c2024] prose-p:text-[#1c2024] prose-li:text-[#1c2024] prose-strong:text-[#111113]"
       plugins={[
         headingsPlugin(),
         listsPlugin(),
