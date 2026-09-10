@@ -38,7 +38,7 @@ async function returnIfSessionInvalid() {
   }
 }
 
-// Get all posts, does not require auth
+// Get all posts, does not require auth (Not currently used in place of server action)
 export async function GET(req: NextRequest) {}
 
 // POST:  Create new post, requires auth

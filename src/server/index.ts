@@ -6,9 +6,10 @@ import * as jose from "jose";
 import { cookies } from "next/headers";
 import { verify } from "otplib";
 import { posts, type SelectPost } from "@/db/schema";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { v2 as cloudinary } from "cloudinary";
+import { Select } from "@base-ui/react";
 
 cloudinary.config(env.CLOUDINARY_URL);
 
@@ -175,4 +176,25 @@ export async function uploadMedia(
     message: "Media uploaded successfully",
     data: result.secure_url,
   };
+}
+
+export async function getPostFromSlug(
+  slug: string,
+): Promise<APIResponse<SelectPost | null>> {
+  const post = await db.select().from(posts).where(eq(posts.slug, slug));
+
+  if (!post || post.length === 0) {
+    console.log("Didn't find that post slug");
+    return {
+      success: false,
+      message: "Post with that slug could not be found",
+      data: null,
+    } as APIResponse<null>;
+  }
+  console.log("Found a post with that slug");
+  return {
+    success: true,
+    message: "Succesfully retrived post with that slug",
+    data: post[0],
+  } as APIResponse<SelectPost>;
 }

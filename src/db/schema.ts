@@ -14,7 +14,7 @@ export const posts = sqliteTable("posts", {
   updatedAt: integer("updated_at", { mode: "timestamp" }).$onUpdate(
     () => new Date(),
   ),
-  slug: text("slug").notNull(),
+  slug: text("slug").notNull().unique(),
   published: integer("published", { mode: "boolean" }).default(false).notNull(),
   publishedAt: integer("published_at", { mode: "timestamp" }).default(
     sql`(CURRENT_TIMESTAMP)`,
