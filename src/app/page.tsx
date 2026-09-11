@@ -29,11 +29,10 @@ export default async function Home() {
       {/* Hero Section */}
       <header className="container mx-auto px-4 py-16 md:py-24 text-center">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-          Welcome to my blog
+          DeezNutz
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-          Thoughts, stories, and technical explorations shared one post at a
-          time.
+          DeezNutz
         </p>
         <Separator className="my-8" />
       </header>
