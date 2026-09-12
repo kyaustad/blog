@@ -10,7 +10,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
   return (
     <Button
       type="button"
-      variant="ghost"
+      variant="outline"
       size="icon"
       aria-label="Toggle theme"
       className={`relative ${className ?? ""}`}
