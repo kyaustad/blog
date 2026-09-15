@@ -45,6 +45,7 @@ export const postsTags = sqliteTable(
 
 export type InsertPost = typeof posts.$inferInsert;
 export type SelectPost = typeof posts.$inferSelect;
+export type SelectTag = typeof tags.$inferSelect;
 
 export type SelectPostWithTags = typeof posts.$inferSelect & {
   tags: (typeof tags.$inferSelect)[];

@@ -5,6 +5,9 @@ import type { APIResponse } from "@/types";
 import { env } from "@/env";
 import { posts, type SelectPost } from "@/db/schema";
 
+// Getting all posts with tags is done via server action, since it never requires auth or form data and makes that easier to manage
+// as a deliberate seperation of admin and consumer privileges
+
 // Helper function. Return from API early if no session cookie exists for the session purpose.
 async function returnIfNoSession() {
   const hasSession = await readPurposeCookie("session", "session");
@@ -37,9 +40,6 @@ async function returnIfSessionInvalid() {
     } as APIResponse<null>);
   }
 }
-
-// Get all posts, does not require auth (Not currently used in place of server action)
-export async function GET(req: NextRequest) {}
 
 // POST:  Create new post, requires auth
 export async function POST(req: NextRequest) {

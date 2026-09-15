@@ -7,7 +7,7 @@ import {
   login,
   verifyMfa,
 } from "./auth";
-import { getAllPosts } from "./content";
+import { getAllPosts, getPostFromSlug } from "./content";
 
 export {
   uploadMedia,
@@ -17,4 +17,5 @@ export {
   login,
   verifyMfa,
   getAllPosts,
+  getPostFromSlug,
 };
