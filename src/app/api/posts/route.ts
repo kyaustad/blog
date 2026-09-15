@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readPurposeCookie } from "@/server";
 import { db } from "@/db";
-import type { APIResponse } from "@/server";
+import type { APIResponse } from "@/types";
 import { env } from "@/env";
 import { posts, type SelectPost } from "@/db/schema";
 
