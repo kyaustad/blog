@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 export default async function Home() {
   let allPosts: SelectPost[] = [];
   try {
-    const allPostsResponse = await getAllPosts();
+    const allPostsResponse = await getAllPosts({ onlyPublished: true });
 
     if (!allPostsResponse.success) {
       throw new Error(allPostsResponse.message);
