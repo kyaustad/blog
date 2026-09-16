@@ -82,3 +82,16 @@ function DesktopNavButtons() {
     </div>
   );
 }
+
+export function BackToDashboardButton() {
+  const router = useRouter();
+  return (
+    <Button
+      onClick={() => {
+        router.push("/admin/dashboard");
+      }}
+    >
+      Back To Dashboard
+    </Button>
+  );
+}

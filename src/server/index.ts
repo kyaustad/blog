@@ -1,5 +1,5 @@
 "use server";
-import { uploadMedia } from "./media";
+import { uploadMedia, storeMediaUrlInDb, getAllMedia } from "./media";
 import {
   clearMfaPendingCookie,
   clearSessionCookie,
@@ -18,4 +18,6 @@ export {
   verifyMfa,
   getAllPosts,
   getPostFromSlug,
+  storeMediaUrlInDb,
+  getAllMedia,
 };

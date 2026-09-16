@@ -43,9 +43,16 @@ export const postsTags = sqliteTable(
   (t) => [primaryKey({ columns: [t.postId, t.tagId] })],
 );
 
+export const media = sqliteTable("media", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  url: text("url").notNull().unique(),
+});
+
 export type InsertPost = typeof posts.$inferInsert;
 export type SelectPost = typeof posts.$inferSelect;
 export type SelectTag = typeof tags.$inferSelect;
+export type SelectMedia = typeof media.$inferSelect;
+export type InsertMedia = typeof media.$inferInsert;
 
 export type SelectPostWithTags = typeof posts.$inferSelect & {
   tags: (typeof tags.$inferSelect)[];

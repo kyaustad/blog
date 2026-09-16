@@ -1,15 +1,18 @@
 import LogoutButton from "@/components/custom/logout-button";
-import PostComposer from "@/components/custom/post-composer";
+import { ActionCard } from "@/components/custom/admin-actions";
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-8 w-full">
-      <h1>Dashboard Page</h1>
+    <div className="flex flex-col items-center h-screen gap-8 w-full p-8 mx-auto">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
       <LogoutButton />
-      <PostComposer
-        className="flex flex-col gap-4"
-        editorClassName="w-full h-full text-foreground"
-      />
+
+      <div className="grid grid-cols-2 gap-4 w-full max-w-screen-md">
+        <ActionCard mode="all-posts" />
+        <ActionCard mode="create" />
+        <ActionCard mode="browse-media" />
+        <ActionCard mode="upload-media" />
+      </div>
     </div>
   );
 }

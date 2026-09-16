@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readPurposeCookie, uploadMedia } from "@/server";
-import type { APIResponse } from "@/server";
+import type { APIResponse } from "@/types";
 import { env } from "@/env";
 
 // Helper function. Return from API early if no session cookie exists for the session purpose.
@@ -64,7 +64,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const result = await uploadMedia(media, type);
+    // the third argument 'true' is to storeInDb, which we should always do from the API as it used by client side components to upload rather than server action calls that can chain the corresponding functions.
+    const result = await uploadMedia(media, type, true);
     return NextResponse.json(result);
   } catch (err) {
     console.error(err);
