@@ -57,3 +57,17 @@ export function ActionCard({
     </Card>
   );
 }
+
+export function BackToDashboard() {
+  const router = useRouter();
+
+  return (
+    <Button
+      onClick={() => {
+        router.push("/admin/dashboard");
+      }}
+    >
+      Back To Dashboard
+    </Button>
+  );
+}

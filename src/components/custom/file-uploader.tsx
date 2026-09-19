@@ -6,8 +6,13 @@ import * as React from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { APIResponse } from "@/types";
 
-export function FileUploader() {
+type UploadProps = {
+  onUpload?: (url: string) => void;
+};
+
+export function FileUploader({ onUpload }: UploadProps) {
   const router = useRouter();
   const [file, setFile] = React.useState<File | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -47,7 +52,7 @@ export function FileUploader() {
       body: formData,
     });
 
-    const data = await response.json().catch(() => null);
+    const data: APIResponse<string> = await response.json().catch(() => null);
     if (!response.ok || !data?.success || !data.data) {
       setIsLoading(false);
       toast.error("Error uploading file!");
@@ -57,18 +62,15 @@ export function FileUploader() {
 
     if (data.data) {
       toast.success("File Upload Successful!");
+      if (onUpload) {
+        onUpload(data.data);
+      }
+      setFile(null);
     }
   };
 
   return (
-    <div className="mx-auto min-h-[90vh] w-full max-w-screen-md p-8 gap-6 flex flex-col">
-      <Button
-        onClick={() => {
-          router.push("/admin/dashboard");
-        }}
-      >
-        Back To Dashboard
-      </Button>
+    <div className="mx-auto w-full max-w-screen-md p-8 gap-6 flex flex-col">
       <Input type="file" accept="image/*" onChange={handleFileChange} />
 
       {previewUrl && (

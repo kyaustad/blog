@@ -9,9 +9,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Cruddy } from "@/components/custom/crud-component";
 
 export default async function Home() {
+  let allPosts = [];
+  const allPostsResponse = await getAllPosts({ onlyPublished: true });
+
+  if (!allPostsResponse.success) {
+    throw new Error(allPostsResponse.message);
+  }
+
+  allPosts = allPostsResponse.data ?? [];
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
@@ -27,21 +35,28 @@ export default async function Home() {
 
       {/* Posts Grid */}
       <section className="container mx-auto px-4 pb-24">
-        <Cruddy<SelectPost>
+        {/*<Cruddy<SelectPost>
           mode={"read"}
           onRead={async () => {
-            let allPosts = [];
-            const allPostsResponse = await getAllPosts({ onlyPublished: true });
 
-            if (!allPostsResponse.success) {
-              throw new Error(allPostsResponse.message);
-            }
-
-            allPosts = allPostsResponse.data ?? [];
-
-            return allPosts;
           }}
-        />
+          fields={[
+            {
+              key: "title",
+              render: (value) => <h1>{value}</h1>,
+            },
+          ]}
+        />*/}
+
+        {allPosts.length === 0 ? (
+          <div>No Posts Yet</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {allPosts.map((post) => (
+              <h1>{post.title}</h1>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

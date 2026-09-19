@@ -3,7 +3,14 @@ import { readPurposeCookie } from "@/server";
 import { db } from "@/db";
 import type { APIResponse } from "@/types";
 import { env } from "@/env";
-import { posts, type SelectPost } from "@/db/schema";
+import {
+  posts,
+  type SelectPostWithTags,
+  type InsertPost,
+  postsTags,
+  SelectTag,
+} from "@/db/schema";
+import { getPostFromId } from "@/server/content";
 
 // Getting all posts with tags is done via server action, since it never requires auth or form data and makes that easier to manage
 // as a deliberate seperation of admin and consumer privileges
@@ -60,29 +67,49 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const title = body.title;
-    const content = body.content;
-    const postedBy = body.postedBy;
-    const published = body.published;
-    const slug = body.slug;
+    const newPost: InsertPost = {
+      title: body.title,
+      content: body.content,
+      featuredImage: body.featuredImage,
+      summary: body.summary,
+      postedBy: body.postedBy,
+      createdAt: body.createdAt,
+      updatedAt: body.updatedAt,
+      slug: body.slug,
+      published: body.published,
+      publishedAt: body.publishedAt,
+    };
+    const tags: SelectTag[] = body.tags;
 
-    const post = await db
-      .insert(posts)
-      .values({ title, content, postedBy, published, slug })
-      .returning();
+    const post = await db.insert(posts).values(newPost).returning();
 
-    if (!post) {
+    if (!post || post.length === 0) {
       return NextResponse.json({
         success: false,
         message: "Failed to create post",
         data: null,
       } as APIResponse<null>);
     }
+
+    for (const tag of tags) {
+      await db.insert(postsTags).values({ postId: post[0].id, tagId: tag.id });
+    }
+
+    const finalResponse = await getPostFromId(post[0].id);
+
+    if (!finalResponse || !finalResponse.success) {
+      return NextResponse.json({
+        success: false,
+        message: "Failed to retrieve final post after tag addition!",
+        data: null,
+      } as APIResponse<null>);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Post created successfully",
-      data: post[0] as SelectPost,
-    } as APIResponse<SelectPost>);
+      data: finalResponse.data as SelectPostWithTags,
+    } as APIResponse<SelectPostWithTags>);
   } catch (error) {
     return NextResponse.json({
       success: false,

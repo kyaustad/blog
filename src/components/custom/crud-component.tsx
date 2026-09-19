@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { Card, CardContent } from "../ui/card";
 
 /* -------------------------------------------------------------------------- */
 /*                                    Types                                   */
@@ -12,13 +14,26 @@ type FieldConfig<T> = {
   };
 }[keyof T];
 
+type FormFieldConfig<T> = {
+  [K in keyof T]: {
+    key: K;
+    label?: string;
+    render?: (props: {
+      value: T[K];
+      onChange: (value: T[K]) => void;
+      data: T;
+    }) => React.ReactNode;
+  };
+}[keyof T];
+
 type CruddyBaseProps = {
   className?: string;
+  childClassName?: string;
 };
 
 type CruddyCreateProps<T, TCreate> = {
   mode: "create";
-  fields?: FieldConfig<TCreate>[];
+  fields?: FormFieldConfig<TCreate>[];
   onCreate: (data: TCreate) => Promise<T>;
 };
 
@@ -31,7 +46,7 @@ type CruddyReadProps<T> = {
 
 type CruddyUpdateProps<T, TUpdate> = {
   mode: "update";
-  fields?: FieldConfig<TUpdate>[];
+  fields?: FormFieldConfig<TUpdate>[];
   onUpdate: (data: TUpdate) => Promise<T>;
 };
 
@@ -100,21 +115,120 @@ export async function Cruddy<T, TCreate = T, TUpdate = T>(
   }
 }
 
+function RenderComp<T>({
+  field,
+  data,
+  onChange,
+  className,
+}: {
+  field: FormFieldConfig<T>;
+  data: T;
+  onChange: (value: T[typeof field.key]) => void;
+  className?: string;
+}) {
+  if (!field.render) {
+    return null;
+  }
+
+  return (
+    <div className={className}>
+      {field.render({
+        value: data[field.key],
+        onChange,
+        data,
+      })}
+    </div>
+  );
+}
+
 function CruddyCreate<T, TCreate>(
   props: CruddyBaseProps & Omit<CruddyCreateProps<T, TCreate>, "mode">,
 ) {
-  return <div className={cn(props.className)}>Create</div>;
+  const [data, setData] = useState<TCreate>({} as TCreate);
+
+  const updateField = <K extends keyof TCreate>(key: K, value: TCreate[K]) => {
+    setData((current) => ({
+      ...current,
+      [key]: value,
+    }));
+  };
+
+  return (
+    <div className={cn(props.className)}>
+      {props.fields?.map((field) => (
+        <RenderComp
+          key={String(field.key)}
+          field={field}
+          data={data}
+          onChange={(value) => updateField(field.key, value)}
+        />
+      ))}
+    </div>
+  );
 }
 
 async function CruddyRead<T>(
   props: CruddyBaseProps & Omit<CruddyReadProps<T>, "mode">,
 ) {
-  const allT: T[] = await props.onRead();
+  let allT: T[] = [];
 
-  if (!allT || allT.length === 0) {
+  try {
+    const results = await props.onRead();
+    if (results && results.length > 0) {
+      allT = results;
+    }
+  } catch {
+    toast.error(`Error reading data from Cruddy read callback`);
+  }
+
+  if (allT.length === 0) {
     return <div>Nothing found currently...</div>;
   }
-  return <div className={cn(props.className)}>Read</div>;
+
+  if (props.display === "list") {
+    return <ul className={cn(props.className, "")}></ul>;
+  }
+  return (
+    <div
+      className={cn(
+        props.className,
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+      )}
+    >
+      {allT.map((item, index) => (
+        <TypeCard
+          key={index}
+          className={props.childClassName}
+          item={item}
+          fields={props.fields}
+        />
+      ))}
+    </div>
+  );
+}
+
+function TypeCard<T>({
+  item,
+  fields,
+  className,
+}: {
+  item: T;
+  fields?: FieldConfig<T>[];
+  className?: string;
+}) {
+  return (
+    <Card className={className}>
+      <CardContent>
+        {fields?.map((field) => (
+          <div key={String(field.key)}>
+            {field.render
+              ? field.render(item[field.key], item)
+              : String(item[field.key])}
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
 }
 
 function CruddyUpdate<T, TUpdate>(

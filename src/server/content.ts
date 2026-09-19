@@ -81,3 +81,38 @@ export async function getPostFromSlug(
     data: post,
   };
 }
+
+export async function getPostFromId(
+  id: number,
+): Promise<APIResponse<SelectPostWithTags | null>> {
+  const rows = await db
+    .select({
+      post: posts,
+      tag: tags,
+    })
+    .from(posts)
+    .leftJoin(postsTags, eq(posts.id, postsTags.postId))
+    .leftJoin(tags, eq(postsTags.tagId, tags.id))
+    .where(eq(posts.id, id));
+
+  if (!rows || rows.length === 0 || !rows[0].post) {
+    return {
+      success: false,
+      message: "Post with that ID could not be found",
+      data: null,
+    };
+  }
+
+  const post: SelectPostWithTags = {
+    ...rows[0].post,
+    tags: rows
+      .map((row) => row.tag)
+      .filter((tag): tag is SelectTag => tag !== null),
+  };
+
+  return {
+    success: true,
+    message: "Post retrieved from slug successfully",
+    data: post,
+  };
+}
