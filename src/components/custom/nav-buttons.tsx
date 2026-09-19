@@ -74,7 +74,9 @@ function MobileNavButtons() {
 function DesktopNavButtons() {
   return (
     <div className=" flex flex-row items-center justify-end gap-2 p-">
-      <Button>Home</Button>
+      <Link href={"/"}>
+        <Button>Home</Button>
+      </Link>
       <Link href="https://kyleaustad.dev">
         <Button>Portfolio</Button>
       </Link>
