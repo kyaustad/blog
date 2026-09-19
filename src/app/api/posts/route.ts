@@ -16,49 +16,40 @@ import { getPostFromId } from "@/server/content";
 // as a deliberate seperation of admin and consumer privileges
 
 // Helper function. Return from API early if no session cookie exists for the session purpose.
-async function returnIfNoSession() {
+async function hasSession(): Promise<boolean> {
   const hasSession = await readPurposeCookie("session", "session");
 
   if (!hasSession) {
-    return NextResponse.json({
-      success: false,
-      message: "Silly Rabbit, Trix are for kids",
-      data: null,
-    } as APIResponse<null>);
+    return false;
   }
+  return true;
 }
 
-async function returnIfSessionInvalid() {
+async function sessionIsValid(): Promise<boolean> {
   const session = await readPurposeCookie("session", "session");
 
   if (!session) {
-    return NextResponse.json({
-      success: false,
-      message: "Silly Rabbit, Trix are for kids",
-      data: null,
-    } as APIResponse<null>);
+    return false;
   }
 
   if (session.sub !== env.ADMIN_EMAIL) {
-    return NextResponse.json({
-      success: false,
-      message: "Silly Rabbit, Trix are for kids",
-      data: null,
-    } as APIResponse<null>);
+    return false;
   }
+
+  return true;
 }
 
 // POST:  Create new post, requires auth
 export async function POST(req: NextRequest) {
-  const noSession = await returnIfNoSession();
-  if (noSession)
+  const sessionExists = await hasSession();
+  if (!sessionExists)
     return {
       success: false,
       message: "Silly Rabbit, Trix are for kids",
       data: null,
     } as APIResponse<null>;
-  const invalid = await returnIfSessionInvalid();
-  if (invalid)
+  const sessionValid = await sessionIsValid();
+  if (!sessionValid)
     return {
       success: false,
       message: "Silly Rabbit, Trix are for kids",
@@ -120,13 +111,13 @@ export async function POST(req: NextRequest) {
 }
 
 // PUT: Update Post, requries auth
-export async function PUT(req: NextRequest) {
-  await returnIfNoSession();
-  await returnIfSessionInvalid();
-}
+// export async function PUT(req: NextRequest) {
+//   await returnIfNoSession();
+//   await returnIfSessionInvalid();
+// }
 
-// DELETE: Delete Post, requires auth
-export async function DELETE(req: NextRequest) {
-  await returnIfNoSession();
-  await returnIfSessionInvalid();
-}
+// // DELETE: Delete Post, requires auth
+// export async function DELETE(req: NextRequest) {
+//   await returnIfNoSession();
+//   await returnIfSessionInvalid();
+// }
