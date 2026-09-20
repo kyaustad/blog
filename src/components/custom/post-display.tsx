@@ -363,8 +363,8 @@ export function FullPostDisplay({
             />
           </div>
         )}
-        <div className="w-full flex flex-row justify-between items-center my-4">
-          <div className="flex flex-row gap-2">
+        <div className="w-full flex flex-col justify-between items-start gap-2 my-4">
+          <div className="flex flex-row flex-wrap gap-2">
             {post.tags.map((tag) => (
               <Badge
                 key={post.id + tag.id + tag.title + post.title}
