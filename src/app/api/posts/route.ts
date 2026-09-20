@@ -11,6 +11,7 @@ import {
   SelectTag,
 } from "@/db/schema";
 import { getPostFromId } from "@/server/content";
+import { revalidatePath } from "next/cache";
 
 // Getting all posts with tags is done via server action, since it never requires auth or form data and makes that easier to manage
 // as a deliberate seperation of admin and consumer privileges
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
         data: null,
       } as APIResponse<null>);
     }
-
+    revalidatePath("/");
     return NextResponse.json({
       success: true,
       message: "Post created successfully",

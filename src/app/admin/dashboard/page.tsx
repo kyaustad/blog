@@ -3,7 +3,7 @@ import { ActionCard } from "@/components/custom/admin-actions";
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col items-center h-screen gap-8 w-full p-8 mx-auto">
+    <div className="flex flex-col items-center h-[80vh] gap-8 mt-16 w-full p-8 mx-auto">
       <h1 className="text-2xl font-bold">Dashboard</h1>
       <LogoutButton />
 

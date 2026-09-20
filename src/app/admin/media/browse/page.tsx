@@ -6,7 +6,7 @@ export default async function BrowseAllMediaPage() {
   const allMedia = (await getAllMedia()).data;
 
   return (
-    <div className="w-full max-w-screen-md flex flex-col p-8 gap-6 mx-auto">
+    <div className="w-full max-w-screen-md mt-16 flex flex-col p-8 gap-6 mx-auto">
       <BackToDashboardButton />
       {allMedia?.length === 0 ? (
         <div>No Media Found </div>
