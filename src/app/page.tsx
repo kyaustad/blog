@@ -21,14 +21,14 @@ export default async function Home() {
   allPosts = allPostsResponse.data ?? [];
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-[80vh] h-full mt-12 bg-background text-foreground">
       {/* Hero Section */}
       <header className="container mx-auto px-4 py-16 md:py-24 text-center">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-          DeezNutz
+          {`Kyle's Blog`}
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-          DeezNutz
+          {`Technical writing, thoughts, ramblings, and deep dives on learning things in all the wrong ways.`}
         </p>
         <Separator className="my-8" />
       </header>

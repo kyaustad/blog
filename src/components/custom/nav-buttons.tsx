@@ -13,8 +13,10 @@ import {
 } from "../ui/drawer";
 import { HamburgerIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import * as React from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import Image from "next/image";
 
 export default function NavButtons() {
   const isMobile = useIsMobile();
@@ -95,5 +97,30 @@ export function BackToDashboardButton() {
     >
       Back To Dashboard
     </Button>
+  );
+}
+
+export function BlogLogo() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  return (
+    <Image
+      alt="Logo"
+      src={
+        resolvedTheme === "dark" ? "/BlogLogoLight.svg" : "/BlogLogoDark.svg"
+      }
+      width={250}
+      height={250}
+      className="aspect-square min-h-14 max-h-14 w-auto m-0 p-0"
+    />
   );
 }

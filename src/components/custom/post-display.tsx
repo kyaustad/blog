@@ -339,51 +339,55 @@ export function FullPostDisplay({
 }) {
   return (
     // <TracingBeam className={cn(className, "px-6 mb-200 ")}>
-    <div
-      className={cn(
-        "flex min-w-0 max-w-full ml-4 flex-col gap-4 bg-muted/50 p-6",
-      )}
-    >
-      {/*<TextFlippingBoard text={post.title} />*/}
-      <h1 className="text-3xl font-semibold">{post.title}</h1>
+    <>
+      <h1 className="text-4xl m-8 font-semibold">{post.title}</h1>
 
-      {post.featuredImage && (
-        <div className="w-full max-h-164 aspect-video overflow-hidden">
-          <Image
-            src={post.featuredImage}
-            alt={post.title + " featured image"}
-            loading="eager"
-            width={2000}
-            height={1500}
-            className="h-full w-full object-cover"
-          />
+      <div
+        className={cn(
+          "flex min-w-0 max-w-full ml-4 flex-col gap-4 bg-muted/50 p-6",
+        )}
+      >
+        {/*<TextFlippingBoard text={post.title} />*/}
+
+        {post.featuredImage && (
+          <div className="w-full max-h-164 aspect-video overflow-hidden">
+            <Image
+              src={post.featuredImage}
+              alt={post.title + " featured image"}
+              loading="eager"
+              width={2000}
+              height={1500}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        )}
+        <div className="w-full flex flex-row justify-between items-center my-4">
+          <div className="flex flex-row gap-2">
+            {post.tags.map((tag) => (
+              <Badge
+                key={post.id + tag.id + tag.title + post.title}
+                className="text-base font-light"
+                variant="default"
+              >
+                {tag.title}
+              </Badge>
+            ))}
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="font-bold text-sm">{post.postedBy}</p>
+            <p className="font-light text-xs">
+              {format(post.publishedAt ?? post.createdAt, "yyyy-MM-dd")}
+            </p>
+          </div>
         </div>
-      )}
-      <div className="w-full flex flex-row justify-between items-center my-4">
-        <div className="flex flex-row gap-2">
-          {post.tags.map((tag) => (
-            <Badge
-              key={post.id + tag.id + tag.title + post.title}
-              className="text-base font-light"
-              variant="default"
-            >
-              {tag.title}
-            </Badge>
-          ))}
-        </div>
-        <div className="flex flex-col gap-1">
-          <p className="font-bold text-sm">{post.postedBy}</p>
-          <p className="font-light text-xs">
-            {format(post.publishedAt ?? post.createdAt, "yyyy-MM-dd")}
-          </p>
+        <Separator className={"w-full min-h-1.5 my-2"} />
+
+        <div className={cn("min-w-0 max-w-full mt-6", "wrap-anywhere")}>
+          <Markdown components={markdownComponents}>{post.content}</Markdown>
         </div>
       </div>
-      <Separator className={"w-full min-h-1.5 my-2"} />
+    </>
 
-      <div className={cn("min-w-0 max-w-full mt-6", "wrap-anywhere")}>
-        <Markdown components={markdownComponents}>{post.content}</Markdown>
-      </div>
-    </div>
     // </TracingBeam>
   );
 }

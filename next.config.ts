@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   images: {
-    remotePatterns: [new URL(`https://res.cloudinary.com/**`)],
+    remotePatterns: [
+      new URL(`https://res.cloudinary.com/**`),
+      new URL(`https://blog.kyleaustad.dev/**`),
+    ],
   },
 };
 
