@@ -113,15 +113,17 @@ export function BlogLogo() {
   }
 
   return (
-    <Image
-      loading="eager"
-      alt="Logo"
-      src={
-        resolvedTheme === "dark" ? "/BlogLogoLight.png" : "/BlogLogoDark.png"
-      }
-      width={250}
-      height={250}
-      className="aspect-square min-h-14 max-h-14 w-auto m-0 p-0"
-    />
+    <Link href={"/"}>
+      <Image
+        loading="eager"
+        alt="Logo"
+        src={
+          resolvedTheme === "dark" ? "/BlogLogoLight.png" : "/BlogLogoDark.png"
+        }
+        width={250}
+        height={250}
+        className="aspect-square min-h-14 max-h-14 w-auto m-0 p-0"
+      />
+    </Link>
   );
 }
