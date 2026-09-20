@@ -41,20 +41,16 @@ async function sessionIsValid(): Promise<boolean> {
 
 // POST:  Create new post, requires auth
 export async function POST(req: NextRequest) {
-  const sessionExists = await hasSession();
-  if (!sessionExists)
+  console.log("Post request recived");
+  const session = await readPurposeCookie("session", "session");
+  if (!session || session.sub !== env.ADMIN_EMAIL) {
+    console.log("Determined Session invalid");
     return {
       success: false,
       message: "Silly Rabbit, Trix are for kids",
       data: null,
     } as APIResponse<null>;
-  const sessionValid = await sessionIsValid();
-  if (!sessionValid)
-    return {
-      success: false,
-      message: "Silly Rabbit, Trix are for kids",
-      data: null,
-    } as APIResponse<null>;
+  }
 
   try {
     const body = await req.json();
@@ -64,11 +60,10 @@ export async function POST(req: NextRequest) {
       featuredImage: body.featuredImage,
       summary: body.summary,
       postedBy: body.postedBy,
-      createdAt: body.createdAt,
-      updatedAt: body.updatedAt,
+      createdAt: body.createdAt ?? new Date().toString(),
       slug: body.slug,
       published: body.published,
-      publishedAt: body.publishedAt,
+      publishedAt: body.publishedAt ? new Date(body.publishedAt) : null,
     };
     const tags: SelectTag[] = body.tags;
 
@@ -102,6 +97,7 @@ export async function POST(req: NextRequest) {
       data: finalResponse.data as SelectPostWithTags,
     } as APIResponse<SelectPostWithTags>);
   } catch (error) {
+    console.error("Error: ", error);
     return NextResponse.json({
       success: false,
       message: "Silly Rabbit, Trix are for kids",

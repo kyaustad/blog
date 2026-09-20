@@ -17,7 +17,6 @@ export default async function Home() {
   if (!allPostsResponse.success) {
     throw new Error(allPostsResponse.message);
   }
-
   allPosts = allPostsResponse.data ?? [];
 
   return (

@@ -14,7 +14,7 @@ import {
 export async function getAllPosts({
   onlyPublished = false,
 }: {
-  onlyPublished: boolean;
+  onlyPublished?: boolean;
 }): Promise<APIResponse<SelectPostWithTags[]>> {
   const rows = await db
     .select({
@@ -37,14 +37,22 @@ export async function getAllPosts({
         ...row.post,
         tags: [],
       };
+
+      postMap.set(post.id, post);
+    }
+
+    if (row.tag) {
+      post.tags.push(row.tag);
     }
   }
+
+  const result = Array.from(postMap.values());
 
   return {
     success: true,
     message: "All posts returned in descending order",
-    data: Array.from(postMap.values()) as SelectPostWithTags[],
-  } as APIResponse<SelectPostWithTags[]>;
+    data: result,
+  };
 }
 
 export async function getPostFromSlug(

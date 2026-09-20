@@ -38,39 +38,34 @@ export default function PostComposer({
 
   const editorRef = useRef<MDXEditorMethods | null>(null);
 
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.setMarkdown(content);
-    }
-  }, [content]);
-
   const handleSubmit = async () => {
-    console.log("Featured Image: ", featuredImage);
-    // try {
-    //   const response = await fetch("/api/posts", {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //       title,
-    //       content,
-    //       featuredImage,
-    //       summary,
-    //       postedBy,
-    //       createdAt: new Date().toDateString(),
-    //       published,
-    //       publishedAt: published === true ? new Date() : undefined,
-    //       slug,
-    //     } as InsertPost),
-    //   });
-    //   const data = await response.json();
-    //   if (data.success) {
-    //     toast.success("Post created successfully");
-    //   } else {
-    //     toast.error(data.message ?? "Failed to create post");
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   toast.error("Failed to create post");
-    // }
+    try {
+      const response = await fetch("/api/posts", {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({
+          title,
+          content,
+          featuredImage,
+          summary,
+          postedBy,
+          createdAt: new Date().toDateString(),
+          published,
+          publishedAt: published === true ? new Date() : undefined,
+          slug,
+          tags,
+        } as InsertPost & { tags: SelectTag[] }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast.success("Post created successfully");
+      } else {
+        toast.error(data.message ?? "Failed to create post");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to create post");
+    }
   };
 
   return (
@@ -177,12 +172,9 @@ export default function PostComposer({
           triggerClassName="w-full"
         />
       </div>
-      <RefEditor
-        ref={editorRef}
-        markdown={content}
-        className={editorClassName}
-        onChange={setContent}
-      />
+      <div className={editorClassName}>
+        <RefEditor ref={editorRef} markdown="" onChange={setContent} />
+      </div>
       <Button type="button" onClick={handleSubmit}>
         Submit
       </Button>
