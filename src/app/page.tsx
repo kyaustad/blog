@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { PostCard } from "@/components/custom/post-display";
 
 export default async function Home() {
   let allPosts = [];
@@ -34,25 +35,12 @@ export default async function Home() {
 
       {/* Posts Grid */}
       <section className="container mx-auto px-4 pb-24">
-        {/*<Cruddy<SelectPost>
-          mode={"read"}
-          onRead={async () => {
-
-          }}
-          fields={[
-            {
-              key: "title",
-              render: (value) => <h1>{value}</h1>,
-            },
-          ]}
-        />*/}
-
         {allPosts.length === 0 ? (
           <div>No Posts Yet</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-24">
             {allPosts.map((post) => (
-              <h1>{post.title}</h1>
+              <PostCard key={post.id + post.title} post={post}></PostCard>
             ))}
           </div>
         )}

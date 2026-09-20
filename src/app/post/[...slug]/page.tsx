@@ -1,8 +1,9 @@
-import { type SelectPost } from "@/db/schema";
+import { SelectPostWithTags, type SelectPost } from "@/db/schema";
 import { getPostFromSlug } from "@/server";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Markdown from "react-markdown";
+import { FullPostDisplay } from "@/components/custom/post-display";
 
 export default async function PostPage({
   params,
@@ -16,16 +17,15 @@ export default async function PostPage({
     return redirect("/not-found");
   }
 
-  const post = res.data as SelectPost;
+  const post = res.data as SelectPostWithTags;
 
   return (
-    <div className="max-w-md">
-      <h1>{post.title}</h1>
-      <p>{post.summary}</p>
-      {post.featuredImage && (
-        <Image alt="Featured Image" src={post.featuredImage}></Image>
+    <div className="max-w-screen-2xl w-full mt-48 p-4 mx-auto">
+      {post ? (
+        <FullPostDisplay post={post} />
+      ) : (
+        <p>{`There was an error retrieving this post. Try again later. Sorrrrryyyyyy`}</p>
       )}
-      <Markdown>{post.content}</Markdown>
     </div>
   );
 }
