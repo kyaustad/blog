@@ -32,14 +32,14 @@ export const TracingBeam = ({
   }, []);
 
   const y1 = useSpring(
-    useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]),
+    useTransform(scrollYProgress, [0, 0.8], [100, svgHeight]),
     {
       stiffness: 500,
       damping: 90,
     },
   );
   const y2 = useSpring(
-    useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]),
+    useTransform(scrollYProgress, [0, 1], [100, svgHeight - 200]),
     {
       stiffness: 500,
       damping: 90,
@@ -51,7 +51,7 @@ export const TracingBeam = ({
       ref={ref}
       className={cn("relative mx-auto h-full w-full max-w-4xl", className)}
     >
-      <div className="absolute top-3 -left-4 md:-left-20">
+      <div className="absolute top-20 -left-4 md:-left-20">
         <motion.div
           transition={{
             duration: 0.2,
@@ -63,7 +63,7 @@ export const TracingBeam = ({
                 ? "none"
                 : "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
-          className="border-netural-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm"
+          className="border-neutral-200 ml-[27px] flex h-4 w-4 items-center justify-center rounded-full border shadow-sm"
         >
           <motion.div
             transition={{
@@ -71,8 +71,9 @@ export const TracingBeam = ({
               delay: 0.5,
             }}
             animate={{
-              backgroundColor: scrollYProgress.get() > 0 ? "white" : "#10b981",
-              borderColor: scrollYProgress.get() > 0 ? "white" : "#059669",
+              backgroundColor:
+                scrollYProgress.get() > 0 ? "#FFFFFF" : "#10b981",
+              borderColor: scrollYProgress.get() > 0 ? "#FFFFFF" : "#059669",
             }}
             className="h-2 w-2 rounded-full border border-neutral-300 bg-white"
           />
@@ -80,7 +81,7 @@ export const TracingBeam = ({
         <svg
           viewBox={`0 0 20 ${svgHeight}`}
           width="20"
-          height={svgHeight} // Set the SVG height
+          height={svgHeight}
           className="ml-4 block"
           aria-hidden="true"
         >
@@ -109,8 +110,8 @@ export const TracingBeam = ({
               gradientUnits="userSpaceOnUse"
               x1="0"
               x2="0"
-              y1={y1} // set y1 for gradient
-              y2={y2} // set y2 for gradient
+              y1={y1}
+              y2={y2}
             >
               <stop stopColor="#3EEDDC" stopOpacity="0"></stop>
               <stop stopColor="#3EEDDC"></stop>
@@ -120,7 +121,9 @@ export const TracingBeam = ({
           </defs>
         </svg>
       </div>
-      <div ref={contentRef}>{children}</div>
+      <div ref={contentRef} className="pt-20">
+        {children}
+      </div>
     </motion.div>
   );
 };

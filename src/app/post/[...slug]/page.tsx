@@ -20,7 +20,7 @@ export default async function PostPage({
   const post = res.data as SelectPostWithTags;
 
   return (
-    <div className="max-w-screen-2xl w-full mt-48 p-4 mx-auto">
+    <div className="max-w-screen-lg w-full mt-48 p-4 mx-auto">
       {post ? (
         <FullPostDisplay post={post} />
       ) : (
