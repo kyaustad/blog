@@ -41,14 +41,16 @@ export function PostCard({
     <Card
       className={cn(
         className,
-        "max-h-125 min-h-125 flex flex-col justify-between",
+        "max-h-132 min-h-132 flex flex-col justify-between",
       )}
     >
       <div className="flex flex-col">
         <CardHeader className="m-0">
-          <div className="flex flex-row w-full justify-between items-center">
-            <CardTitle className="text-lg">{post.title}</CardTitle>
-
+          <div className="flex flex-col gap-1 w-full justify-between items-start">
+            <CardTitle className="text-lg line-clamp-2 text-ellipsis">
+              {post.title}
+            </CardTitle>
+            <Separator />
             <CardTitle className="font-light text-sm">
               {format(post.publishedAt ?? post.createdAt, "yyyy-MM-dd")}
             </CardTitle>
