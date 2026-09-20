@@ -117,7 +117,7 @@ export function BlogLogo() {
       loading="eager"
       alt="Logo"
       src={
-        resolvedTheme === "dark" ? "/BlogLogoLight.svg" : "/BlogLogoDark.svg"
+        resolvedTheme === "dark" ? "/BlogLogoLight.png" : "/BlogLogoDark.png"
       }
       width={250}
       height={250}
