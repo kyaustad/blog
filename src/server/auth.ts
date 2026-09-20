@@ -95,7 +95,10 @@ export async function login(
       message: "Wrong Credentials Dumbass",
     };
   }
-  const passwordValid = await verifyPassword(password, env.PASSWORD_HASH);
+  const passwordValid = await verifyPassword(
+    password,
+    env.PASSWORD_HASH.trim(),
+  );
 
   if (!passwordValid) {
     return {

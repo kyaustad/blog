@@ -114,6 +114,7 @@ export function BlogLogo() {
 
   return (
     <Image
+      loading="eager"
       alt="Logo"
       src={
         resolvedTheme === "dark" ? "/BlogLogoLight.svg" : "/BlogLogoDark.svg"
