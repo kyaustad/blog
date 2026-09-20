@@ -91,6 +91,7 @@ export function BackToDashboardButton() {
   const router = useRouter();
   return (
     <Button
+      className={"w-full"}
       onClick={() => {
         router.push("/admin/dashboard");
       }}

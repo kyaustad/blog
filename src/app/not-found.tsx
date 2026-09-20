@@ -1,7 +1,7 @@
 export default async function NotFound() {
   return (
-    <div>
-      <h1>That Page couldnt be found loster</h1>
+    <div className="mx-auto mt-48">
+      <h1>That page could not be found...</h1>
     </div>
   );
 }

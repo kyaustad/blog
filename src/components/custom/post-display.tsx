@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { EyeIcon } from "@phosphor-icons/react";
+import { EyeIcon, PencilIcon } from "@phosphor-icons/react";
 import { Badge } from "../ui/badge";
 import { TracingBeam } from "../ui/tracing-beam";
 import Markdown from "react-markdown";
@@ -31,17 +31,17 @@ import { TextFlippingBoard } from "../ui/text-flipping-board";
 export function PostCard({
   post,
   className,
+  adminMode = false,
 }: {
   post: SelectPostWithTags;
   className?: string;
+  adminMode?: boolean;
 }) {
-  const router = useRouter();
-
   return (
     <Card
       className={cn(
         className,
-        "max-h-132 min-h-132 flex flex-col justify-between",
+        "max-h-148 min-h-148 flex flex-col justify-between",
       )}
     >
       <div className="flex flex-col">
@@ -76,7 +76,7 @@ export function PostCard({
         {post.summary}
       </CardDescription>
 
-      <CardFooter className="flex flex-row justify-between">
+      <CardFooter className="flex flex-col gap-4 justify-between ">
         <div className="flex flex-row gap-2">
           {post.tags.map((tag) => (
             <Badge
@@ -89,12 +89,21 @@ export function PostCard({
           ))}
         </div>
 
-        <Link href={`/post/${post.slug}`}>
-          <Button className="flex flex-row gap-2">
-            <EyeIcon size={6} />
-            Read
-          </Button>
-        </Link>
+        {adminMode ? (
+          <Link href={`/admin/edit/${post.id}`} className="w-full justify-end">
+            <Button className="flex flex-row gap-2 w-full">
+              <PencilIcon size={6} />
+              Edit
+            </Button>
+          </Link>
+        ) : (
+          <Link href={`/post/${post.slug}`} className="w-full justify-end">
+            <Button className="flex flex-row gap-2 w-full">
+              <EyeIcon size={6} />
+              Read
+            </Button>
+          </Link>
+        )}
       </CardFooter>
     </Card>
   );

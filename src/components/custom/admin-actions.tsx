@@ -12,7 +12,7 @@ const MODE_MAP = {
   },
   "all-posts": {
     header: "All Posts",
-    link: "/admin/all-posts",
+    link: "/admin/posts",
     buttonText: "Posts",
   },
   "browse-media": {
