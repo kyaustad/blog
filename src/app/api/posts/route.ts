@@ -15,41 +15,17 @@ import { getPostFromId } from "@/server/content";
 // Getting all posts with tags is done via server action, since it never requires auth or form data and makes that easier to manage
 // as a deliberate seperation of admin and consumer privileges
 
-// Helper function. Return from API early if no session cookie exists for the session purpose.
-async function hasSession(): Promise<boolean> {
-  const hasSession = await readPurposeCookie("session", "session");
-
-  if (!hasSession) {
-    return false;
-  }
-  return true;
-}
-
-async function sessionIsValid(): Promise<boolean> {
-  const session = await readPurposeCookie("session", "session");
-
-  if (!session) {
-    return false;
-  }
-
-  if (session.sub !== env.ADMIN_EMAIL) {
-    return false;
-  }
-
-  return true;
-}
-
 // POST:  Create new post, requires auth
 export async function POST(req: NextRequest) {
   console.log("Post request recived");
   const session = await readPurposeCookie("session", "session");
   if (!session || session.sub !== env.ADMIN_EMAIL) {
     console.log("Determined Session invalid");
-    return {
+    return NextResponse.json({
       success: false,
       message: "Silly Rabbit, Trix are for kids",
       data: null,
-    } as APIResponse<null>;
+    } as APIResponse<null>);
   }
 
   try {
