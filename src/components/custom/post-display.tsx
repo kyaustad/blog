@@ -355,7 +355,7 @@ export function FullPostDisplay({
 
       <div
         className={cn(
-          "flex min-w-0 max-w-full ml-4 flex-col gap-4 bg-muted/50 p-6",
+          "flex min-w-0 max-w-full flex-col gap-4 bg-muted/50 p-6",
         )}
       >
         {/*<TextFlippingBoard text={post.title} />*/}
