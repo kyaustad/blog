@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "| Blog | Kyle Austad |",
+  title: "Blog | Kyle Austad",
   description: "Technical writing for the clueless",
 };
 
