@@ -11,18 +11,16 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { EyeIcon, PencilIcon } from "@phosphor-icons/react";
 import { Badge } from "../ui/badge";
-import { TracingBeam } from "../ui/tracing-beam";
 import Markdown from "react-markdown";
 import type { Components } from "react-markdown";
 import { CodeBlock } from "../ui/code-block";
 import { Separator } from "../ui/separator";
-import { TextFlippingBoard } from "../ui/text-flipping-board";
+import remarkBreaks from "remark-breaks";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Post Card                                 */
@@ -354,9 +352,7 @@ export function FullPostDisplay({
       <h1 className="text-4xl m-8 font-semibold">{post.title}</h1>
 
       <div
-        className={cn(
-          "flex min-w-0 max-w-full flex-col gap-4 bg-muted/50 p-6",
-        )}
+        className={cn("flex min-w-0 max-w-full flex-col gap-4 bg-muted/50 p-6")}
       >
         {/*<TextFlippingBoard text={post.title} />*/}
 
@@ -394,7 +390,12 @@ export function FullPostDisplay({
         <Separator className={"w-full min-h-1.5 my-2"} />
 
         <div className={cn("min-w-0 max-w-full mt-6", "wrap-anywhere")}>
-          <Markdown components={markdownComponents}>{post.content}</Markdown>
+          <Markdown
+            remarkPlugins={[remarkBreaks]}
+            components={markdownComponents}
+          >
+            {post.content}
+          </Markdown>
         </div>
       </div>
     </>
