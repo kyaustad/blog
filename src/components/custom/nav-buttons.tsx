@@ -55,14 +55,16 @@ function MobileNavButtons() {
             </DrawerClose>
           </DrawerHeader>
           <div className="flex flex-col m-2 gap-2 p-2">
-            <Button
-              onClick={() => {
-                setDrawerOpen(false);
-                router.push("/");
-              }}
-            >
-              Home
-            </Button>
+            <Link href={"/"} className="w-full">
+              <Button
+                className={"w-full"}
+                onClick={() => {
+                  setDrawerOpen(false);
+                }}
+              >
+                Home
+              </Button>
+            </Link>
             <Link href="https://kyleaustad.dev" className="min-w-full">
               <Button className="w-full">Portfolio</Button>
             </Link>
