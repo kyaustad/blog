@@ -66,6 +66,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
       suppressHydrationWarning
     >
+      <meta
+        name="google-site-verification"
+        content="gRFRh9Dojbc1r7Wn6Qr9tcIC4n5jCMKrPNiakMrimBE"
+      />
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <Providers>
           <NavBar>{children}</NavBar>
