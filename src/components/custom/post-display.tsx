@@ -39,7 +39,7 @@ export function PostCard({
     <Card
       className={cn(
         className,
-        "max-h-148 min-h-148 flex flex-col justify-between",
+        "max-h-164 min-h-124 h-full flex flex-col justify-between",
       )}
     >
       <div className="flex flex-col">
@@ -75,7 +75,7 @@ export function PostCard({
       </CardDescription>
 
       <CardFooter className="flex flex-col gap-4 justify-between ">
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
             <Badge
               key={post.id + tag.id + tag.title + post.title}
@@ -123,6 +123,7 @@ const codeFilenames = {
   cs: "code.cs",
   css: "style.css",
   txt: "code.txt",
+  toml: "some.toml",
 } as const;
 
 type CodeLanguage = keyof typeof codeFilenames;

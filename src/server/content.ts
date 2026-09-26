@@ -25,7 +25,7 @@ export async function getAllPosts({
     .leftJoin(postsTags, eq(posts.id, postsTags.postId))
     .leftJoin(tags, eq(postsTags.tagId, tags.id))
     .where(onlyPublished ? eq(posts.published, true) : undefined)
-    .orderBy(desc(posts.createdAt));
+    .orderBy(desc(posts.publishedAt));
 
   const postMap = new Map<number, SelectPostWithTags>();
 

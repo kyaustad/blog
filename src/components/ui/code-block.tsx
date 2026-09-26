@@ -15,9 +15,11 @@ import python from "react-syntax-highlighter/dist/cjs/languages/prism/python";
 import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp";
 import csharp from "react-syntax-highlighter/dist/cjs/languages/prism/csharp";
 import css from "react-syntax-highlighter/dist/cjs/languages/prism/css";
+import toml from "react-syntax-highlighter/dist/cjs/languages/prism/toml";
 
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("js", javascript);
+SyntaxHighlighter.registerLanguage("toml", toml);
 
 SyntaxHighlighter.registerLanguage("typescript", typescript);
 SyntaxHighlighter.registerLanguage("ts", typescript);
@@ -84,7 +86,7 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="relative w-full rounded-lg bg-slate-900 p-4 font-mono text-sm">
+    <div className="relative w-full overflow-x-auto rounded-lg bg-slate-900 p-4 font-mono text-sm">
       <div className="flex flex-col gap-2">
         {tabsExist && (
           <div className="flex  overflow-x-auto">
@@ -116,7 +118,7 @@ export const CodeBlock = ({
         )}
       </div>
       <SyntaxHighlighter
-        language={activeLanguage}
+        language={activeLanguage === "toml" ? "text" : activeLanguage}
         style={atomDark}
         customStyle={{
           margin: 0,
@@ -124,7 +126,8 @@ export const CodeBlock = ({
           background: "transparent",
           fontSize: "0.875rem", // text-sm equivalent
         }}
-        wrapLines={true}
+        wrapLines={false}
+        wrapLongLines={false}
         showLineNumbers={true}
         lineProps={(lineNumber) => ({
           style: {
@@ -135,7 +138,6 @@ export const CodeBlock = ({
             width: "100%",
           },
         })}
-        PreTag="div"
       >
         {String(activeCode)}
       </SyntaxHighlighter>
