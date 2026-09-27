@@ -4,7 +4,6 @@ import { IconCheck, IconCopy } from "@tabler/icons-react";
 
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { vsDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javascript";
 import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
@@ -16,10 +15,12 @@ import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp";
 import csharp from "react-syntax-highlighter/dist/cjs/languages/prism/csharp";
 import css from "react-syntax-highlighter/dist/cjs/languages/prism/css";
 import toml from "react-syntax-highlighter/dist/cjs/languages/prism/toml";
+import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("js", javascript);
 SyntaxHighlighter.registerLanguage("toml", toml);
+SyntaxHighlighter.registerLanguage("json", json);
 
 SyntaxHighlighter.registerLanguage("typescript", typescript);
 SyntaxHighlighter.registerLanguage("ts", typescript);

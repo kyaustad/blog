@@ -307,13 +307,13 @@ const markdownComponents: Components = {
     const match = /language-([^\s]+)/.exec(className || "");
 
     if (match) {
-      const language = match[1];
+      const [language, filename] = match[1].split("|");
 
       return (
         <div className="w-full my-8">
           <CodeBlock
             language={language}
-            filename={getCodeFilename(language)}
+            filename={filename ?? getCodeFilename(language)}
             code={String(children).replace(/\n$/, "")}
           />
         </div>
