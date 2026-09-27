@@ -126,6 +126,7 @@ const codeFilenames = {
   css: "style.css",
   txt: "code.txt",
   toml: "some.toml",
+  json: "some.json",
 } as const;
 
 type CodeLanguage = keyof typeof codeFilenames;
