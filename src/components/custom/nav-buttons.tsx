@@ -40,9 +40,13 @@ function MobileNavButtons() {
         open={drawerOpen}
         onOpenChange={() => setDrawerOpen(!drawerOpen)}
       >
-        <DrawerTrigger id="drawer-trigg">
+        <DrawerTrigger
+          id="drawer-trigg"
+          aria-label="Nav Menu Button"
+          aria-description="Button to open nav menu"
+        >
           <div className="p-1 border border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50">
-            <ListIcon size={24} />
+            <ListIcon aria-hidden size={24} />
           </div>
         </DrawerTrigger>
         <DrawerContent className="flex flex-col gap-8 p-2">
@@ -123,8 +127,8 @@ export function BlogLogo() {
         src={
           resolvedTheme === "dark" ? "/BlogLogoLight.png" : "/BlogLogoDark.png"
         }
-        width={250}
-        height={250}
+        width={100}
+        height={100}
         className="aspect-square min-h-14 max-h-14 w-auto m-0 p-0"
       />
     </Link>

@@ -59,6 +59,8 @@ export function PostCard({
           {post.featuredImage && (
             <div className="w-full aspect-21/9 overflow-hidden">
               <Image
+                loading="eager"
+                fetchPriority="high"
                 src={post.featuredImage}
                 alt={post.title + "featured image"}
                 height={400}
