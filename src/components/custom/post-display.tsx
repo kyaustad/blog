@@ -127,6 +127,7 @@ const codeFilenames = {
   txt: "code.txt",
   toml: "some.toml",
   json: "some.json",
+  powershell: "",
 } as const;
 
 type CodeLanguage = keyof typeof codeFilenames;
@@ -248,9 +249,27 @@ const markdownComponents: Components = {
 
   /* -------------------------------- Images -------------------------------- */
 
-  img: ({ className, ...props }) => (
-    <img className={cn("my-6 h-auto max-w-full ", className)} {...props} />
-  ),
+  img: ({ src, alt }) => {
+    if (!src || typeof src !== "string") return null;
+
+    return (
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="my-8 block w-full overflow-hidden rounded-lg"
+      >
+        <Image
+          src={src}
+          alt={alt ?? ""}
+          width={2000}
+          height={2000}
+          sizes="(max-width: 768px) 100vw, 2000px"
+          className="h-auto w-full object-contain"
+        />
+      </a>
+    );
+  },
 
   /* --------------------------------- Table -------------------------------- */
 
