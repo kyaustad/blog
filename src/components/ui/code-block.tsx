@@ -4,6 +4,7 @@ import { IconCheck, IconCopy } from "@tabler/icons-react";
 
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { vscDarkPlus as alternateTheme } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javascript";
 import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
@@ -122,7 +123,7 @@ export const CodeBlock = ({
       </div>
       <SyntaxHighlighter
         language={activeLanguage === "toml" ? "text" : activeLanguage}
-        style={atomDark}
+        style={activeLanguage === "powershell" ? alternateTheme : atomDark}
         customStyle={{
           margin: 0,
           padding: 0,
