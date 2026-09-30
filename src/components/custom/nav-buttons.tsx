@@ -11,12 +11,18 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "../ui/drawer";
-import { HamburgerIcon, ListIcon, XIcon } from "@phosphor-icons/react";
+import {
+  ListIcon,
+  XIcon,
+  LinkedinLogoIcon,
+  GithubLogoIcon,
+} from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { Separator } from "../ui/separator";
 
 export default function NavButtons() {
   const isMobile = useIsMobile();
@@ -72,6 +78,22 @@ function MobileNavButtons() {
             <Link href="https://kyleaustad.dev" className="min-w-full">
               <Button className="w-full">Portfolio</Button>
             </Link>
+            <Separator />
+            <div className="w-full flex flex-row justify-between gap-2">
+              <Link
+                href="https://www.linkedin.com/in/kyle-austad/"
+                className="w-1/2"
+              >
+                <Button className={"w-full"}>
+                  <LinkedinLogoIcon size={24} />
+                </Button>
+              </Link>
+              <Link href="https://github.com/kyaustad" className="w-1/2">
+                <Button className={"w-full"}>
+                  <GithubLogoIcon size={24} />
+                </Button>
+              </Link>
+            </div>
           </div>
         </DrawerContent>
       </Drawer>
@@ -87,6 +109,17 @@ function DesktopNavButtons() {
       </Link>
       <Link href="https://kyleaustad.dev">
         <Button>Portfolio</Button>
+      </Link>
+      <p>-</p>
+      <Link href="https://github.com/kyaustad" className="">
+        <Button className={"aspec-square"}>
+          <GithubLogoIcon size={24} />
+        </Button>
+      </Link>
+      <Link href="https://www.linkedin.com/in/kyle-austad/">
+        <Button>
+          <LinkedinLogoIcon size={24} />
+        </Button>
       </Link>
       <ThemeToggle />
     </div>
