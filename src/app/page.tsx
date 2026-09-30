@@ -21,7 +21,7 @@ export default async function Home() {
   allPosts = allPostsResponse.data ?? [];
 
   return (
-    <main className="min-h-[80vh] h-full mt-12 bg-background text-foreground">
+    <main className="min-h-[80vh] h-full mt-16 bg-background text-foreground">
       {/* Hero Section */}
       <header className="container mx-auto px-4 py-16 md:py-24 text-center">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
